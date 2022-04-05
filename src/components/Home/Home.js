@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Reviews from '../Reviews/Reviews';
 
 
+
 const Home = () => {
     const [reviews, setReviews] = useState([])
     useEffect(() => {
@@ -10,7 +11,12 @@ const Home = () => {
             .then(data => setReviews(data))
     }, []);
 
+    var reviewsCart = reviews.slice(0, 3);
 
+    const handleAddToReviews = () => {
+        reviewsCart = reviews.slice(0, 6);
+        console.log(reviewsCart);
+    }
 
 
     return (
@@ -31,11 +37,11 @@ const Home = () => {
                 <h1 className='mb-4 pb-6 font-bold text-2xl'>Customer Reviews</h1>
                 <div className=' gap-0 grid grid-cols-3'>
                     {
-                        reviews.slice(0, 3).map(review => <Reviews key={review.id} review={review}></Reviews>)
+                        reviewsCart.map(review => <Reviews key={review.id} review={review}></Reviews>)
                     }
                 </div>
 
-                <button className='font-bold py-2 px-4 rounded bg-blue-500 text-white mt-4'>
+                <button onClick={() => handleAddToReviews()} className='font-bold py-2 px-4 rounded bg-blue-500 text-white mt-4'>
                     <p>All Review</p>
                 </button>
 
