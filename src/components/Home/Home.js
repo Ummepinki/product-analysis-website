@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Reviews from '../Reviews/Reviews';
+import Review from '../Review/Review';
+import { useNavigate, } from "react-router-dom";
 
 
 
@@ -8,14 +9,14 @@ const Home = () => {
     useEffect(() => {
         fetch('reviews.json')
             .then(res => res.json())
-            .then(data => setReviews(data))
+            .then(data => setReviews(data.slice(0, 3)))
     }, []);
 
-    var reviewsCart = reviews.slice(0, 3);
-
+    let navigate = useNavigate();
     const handleAddToReviews = () => {
-        reviewsCart = reviews.slice(0, 6);
-        console.log(reviewsCart);
+
+        navigate("/reviews");
+
     }
 
 
@@ -37,7 +38,7 @@ const Home = () => {
                 <h1 className='mb-4 pb-6 font-bold text-2xl'>Customer Reviews</h1>
                 <div className=' gap-0 grid grid-cols-3'>
                     {
-                        reviewsCart.map(review => <Reviews key={review.id} review={review}></Reviews>)
+                        reviews.map(review => <Review key={review.id} review={review}></Review>)
                     }
                 </div>
 

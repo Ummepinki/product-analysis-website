@@ -1,21 +1,25 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Review from '../Review/Review';
 
-const Reviews = (props) => {
-    const { name, comment, ratings, img } = props.review;
+
+const Reviews = () => {
+    const [reviews, setReviews] = useState([])
+    useEffect(() => {
+        fetch('reviews.json')
+            .then(res => res.json())
+            .then(data => setReviews(data))
+    }, []);
 
     return (
-        <div>
-            <div>
-                <img className='w-16' src={img} alt=''></img>
-                <p>Brand name: {name}</p>
-                <p> Comment:{comment}</p>
-                <p><small>Ratings: {ratings}</small></p>
-            </div>
-
-
-
+        <div className=' gap-2 grid grid-cols-3'>
+            {
+                reviews.map(review => <Review key={review.id} review={review}></Review>)
+            }
         </div>
+
+
+
     );
 };
 
